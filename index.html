@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório Executivo · Março/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg2: #111827;
+  --bg3: #1a2235;
+  --bg4: #1f2d42;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8edf5;
+  --text2: #8fa3be;
+  --text3: #5a7191;
+  --green: #10b981;
+  --green-bg: rgba(16,185,129,0.1);
+  --green-border: rgba(16,185,129,0.25);
+  --red: #ef4444;
+  --red-bg: rgba(239,68,68,0.1);
+  --red-border: rgba(239,68,68,0.25);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,0.1);
+  --amber-border: rgba(245,158,11,0.25);
+  --blue: #3b82f6;
+  --blue-bg: rgba(59,130,246,0.1);
+  --blue-border: rgba(59,130,246,0.25);
+  --accent: #6366f1;
+  --accent2: #818cf8;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0f1729 0%, #1a2040 50%, #0f1729 100%);
+  border-bottom: 1px solid var(--border2);
+  padding: 3rem 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 10%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-inner { max-width: 960px; margin: 0 auto; position: relative; }
+.header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+.logo-area { display: flex; align-items: center; gap: 12px; }
+.logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 12px rgba(129,140,248,0.6); }
+.logo-text { font-size: 11px; font-weight: 500; color: var(--text3); letter-spacing: .12em; text-transform: uppercase; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; letter-spacing: .04em; }
+.badge-blue { background: var(--blue-bg); color: #93c5fd; border: 1px solid var(--blue-border); }
+.badge-green { background: var(--green-bg); color: #6ee7b7; border: 1px solid var(--green-border); }
+.header-title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: #fff; letter-spacing: -.02em; line-height: 1.2; margin-bottom: .5rem; }
+.header-title span { color: var(--accent2); }
+.header-sub { font-size: 13px; color: var(--text2); }
+/* NAV */
+.nav { background: var(--bg2); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+.nav-inner { max-width: 960px; margin: 0 auto; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-item { font-size: 11px; font-weight: 500; color: var(--text3); padding: 14px 16px; white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; text-decoration: none; letter-spacing: .04em; }
+.nav-item:hover { color: var(--text); }
+.nav-item.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 2rem; }
+/* SECTION */
+.section { margin-bottom: 3rem; scroll-margin-top: 60px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+.section-icon { font-size: 16px; }
+.section-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; }
+.section-line { flex: 1; height: 1px; background: var(--border); }
+/* CARDS GRID */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media(max-width:700px) {
+  .grid3, .grid4 { grid-template-columns: 1fr 1fr; }
+  .grid2 { grid-template-columns: 1fr; }
+}
+@media(max-width:440px) {
+  .grid3, .grid4 { grid-template-columns: 1fr; }
+}
+/* METRIC CARD */
+.mc { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; position: relative; overflow: hidden; }
+.mc::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 3px 0 0 3px; }
+.mc-green::before { background: var(--green); }
+.mc-red::before { background: var(--red); }
+.mc-amber::before { background: var(--amber); }
+.mc-blue::before { background: var(--blue); }
+.mc-gray::before { background: var(--text3); }
+.mc-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; font-weight: 500; }
+.mc-value { font-size: 1.15rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.mc-green .mc-value { color: var(--green); }
+.mc-red .mc-value { color: var(--red); }
+.mc-amber .mc-value { color: var(--amber); }
+.mc-blue .mc-value { color: var(--blue); }
+.mc-gray .mc-value { color: var(--text2); }
+.mc-sub { font-size: 10px; color: var(--text3); margin-top: 3px; }
+/* TABLE */
+.table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead tr { background: var(--bg3); }
+th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .07em; white-space: nowrap; }
+th.r { text-align: right; }
+th.c { text-align: center; }
+td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: middle; }
+td.r { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+td.c { text-align: center; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.tf td { background: var(--bg3); font-weight: 600; border-top: 1px solid var(--border2); }
+.tsep td { background: var(--bg); font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .07em; padding: 6px 14px; border-top: 1px solid var(--border); }
+.tg td { background: var(--green-bg); color: var(--green); font-weight: 600; border-top: 1px solid var(--green-border); }
+.tr2 td { background: var(--red-bg); color: var(--red); font-weight: 600; border-top: 1px solid var(--red-border); }
+/* PILLS */
+.pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.pill-g { background: var(--green-bg); color: #6ee7b7; border: 1px solid var(--green-border); }
+.pill-r { background: var(--red-bg); color: #fca5a5; border: 1px solid var(--red-border); }
+.pill-a { background: var(--amber-bg); color: #fcd34d; border: 1px solid var(--amber-border); }
+.pill-gr { background: rgba(255,255,255,0.05); color: var(--text3); border: 1px solid var(--border); }
+/* TAG */
+.tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; }
+.tag-r { background: var(--red-bg); color: #fca5a5; }
+.tag-a { background: var(--amber-bg); color: #fcd34d; }
+.tag-g { background: var(--green-bg); color: #6ee7b7; }
+.tag-gr { background: rgba(255,255,255,0.05); color: var(--text3); }
+/* ALERT */
+.alert { border-radius: 10px; padding: 1rem 1.25rem; font-size: 13px; margin-bottom: 10px; border-left: 3px solid; line-height: 1.6; }
+.alert strong { font-weight: 600; display: block; margin-bottom: 4px; }
+.alert-r { background: var(--red-bg); border-color: var(--red); color: #fca5a5; }
+.alert-r strong { color: #fca5a5; }
+.alert-a { background: var(--amber-bg); border-color: var(--amber); color: #fcd34d; }
+.alert-a strong { color: #fcd34d; }
+.alert-g { background: var(--green-bg); border-color: var(--green); color: #6ee7b7; }
+.alert-g strong { color: #6ee7b7; }
+.alert-b { background: var(--blue-bg); border-color: var(--blue); color: #93c5fd; }
+.alert-b strong { color: #93c5fd; }
+/* NOTE */
+.note { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: .75rem 1rem; font-size: 11px; color: var(--text2); margin-top: 10px; line-height: 1.6; }
+/* RANK */
+.rk { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 10px; font-weight: 700; }
+.rk-g { background: rgba(245,158,11,0.2); color: #fcd34d; }
+.rk-s { background: rgba(148,163,184,0.2); color: #94a3b8; }
+.rk-b { background: rgba(180,120,80,0.2); color: #d4956a; }
+.rk-n { background: rgba(255,255,255,0.05); color: var(--text3); }
+/* AGING */
+.aging-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.aging-item:last-child { border-bottom: none; }
+.aging-label { color: var(--text2); }
+.aging-right { display: flex; align-items: center; gap: 12px; }
+.aging-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 11px; }
+/* BARS */
+.bar-section { }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.bar-label { font-size: 11px; color: var(--text2); min-width: 120px; flex-shrink: 0; }
+.bar-col { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.bar-bg { height: 18px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 10px; font-weight: 600; white-space: nowrap; transition: width .5s ease; }
+.bar-fill-in { background: linear-gradient(90deg, #059669, #10b981); color: #ecfdf5; }
+.bar-fill-out { background: linear-gradient(90deg, #dc2626, #ef4444); color: #fee2e2; }
+.bar-saldo { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; min-width: 90px; text-align: right; flex-shrink: 0; }
+/* ROI CARDS */
+.roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.roi-card { background: var(--red-bg); border: 1px solid var(--red-border); border-radius: 10px; padding: 1rem 1.25rem; }
+.roi-label { font-size: 11px; color: #fca5a5; margin-bottom: 4px; }
+.roi-value { font-size: 1.6rem; font-weight: 700; color: var(--red); font-family: 'JetBrains Mono', monospace; }
+.roi-sub { font-size: 10px; color: #fca5a5; margin-top: 4px; }
+/* FELIPE */
+.felipe-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.felipe-row:last-child { border-bottom: none; }
+.felipe-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.felipe-total { display: flex; justify-content: space-between; padding: 12px 0 0; font-size: 14px; font-weight: 700; border-top: 1px solid var(--border2); margin-top: 4px; }
+/* REC */
+.rec-item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.rec-item:last-child { border-bottom: none; }
+.rec-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
+.rec-num-r { background: var(--red-bg); color: #fca5a5; border: 1px solid var(--red-border); }
+.rec-num-a { background: var(--amber-bg); color: #fcd34d; border: 1px solid var(--amber-border); }
+.rec-num-g { background: var(--green-bg); color: #6ee7b7; border: 1px solid var(--green-border); }
+.rec-title { font-weight: 600; font-size: 13px; color: var(--text); margin-bottom: 5px; }
+.rec-body { font-size: 12px; color: var(--text2); line-height: 1.7; }
+/* CONCLUSAO */
+.concl-table { }
+.concl-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.concl-row:last-child { border-bottom: none; }
+.concl-label { color: var(--text2); }
+.concl-status { font-weight: 500; }
+/* FOOTER */
+.footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 11px; color: var(--text3); line-height: 1.8; margin-top: 2rem; }
+/* PRONAMPE */
+.pronampe-item { display: flex; justify-content: space-between; padding: 9px 14px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.pronampe-item:last-child { border-bottom: none; }
+.pronampe-label { color: var(--text3); }
+.pronampe-val { font-weight: 500; color: var(--text); }
+/* DIVIDER */
+hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="logo-area">
+        <div class="logo-dot"></div>
+        <div class="logo-text">BPO Financeiro · Advocacia</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-blue">Fechamento Definitivo</span>
+        <span class="badge badge-green">Validado</span>
+      </div>
+    </div>
+    <div class="header-title">Relatório Executivo<br><span>Março / 2026</span></div>
+    <div class="header-sub">Período: 01/03/2026 a 31/03/2026 &nbsp;·&nbsp; Escritório de Advocacia &nbsp;·&nbsp; Gerado em 09/04/2026</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-item active" href="#resumo">Resumo</a>
+    <a class="nav-item" href="#comparativo">Comparativo</a>
+    <a class="nav-item" href="#semanal">Semanal</a>
+    <a class="nav-item" href="#receitas">Receitas</a>
+    <a class="nav-item" href="#rankings">Rankings</a>
+    <a class="nav-item" href="#inadimplencia">Inadimplência</a>
+    <a class="nav-item" href="#trafego">Tráfego</a>
+    <a class="nav-item" href="#felipe">Felipe Athayde</a>
+    <a class="nav-item" href="#pronampe">PRONAMPE</a>
+    <a class="nav-item" href="#alertas">Alertas</a>
+    <a class="nav-item" href="#insights">Insights</a>
+    <a class="nav-item" href="#recomendacoes">Recomendações</a>
+    <a class="nav-item" href="#conclusao">Conclusão</a>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- 1. RESUMO -->
+<section class="section" id="resumo">
+  <div class="section-header">
+    <span class="section-icon">✅</span>
+    <span class="section-title">1 · Resumo Geral</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid3" style="margin-bottom:12px">
+    <div class="mc mc-green">
+      <div class="mc-label">Receita Operacional</div>
+      <div class="mc-value">R$ 198.141,88</div>
+      <div class="mc-sub">Melhor mês do trimestre · +12,5% vs fev</div>
+    </div>
+    <div class="mc mc-amber">
+      <div class="mc-label">Custos e Despesas Operacionais</div>
+      <div class="mc-value">R$ 116.478,68</div>
+      <div class="mc-sub">Excl. retirada de capital R$ 87.600</div>
+    </div>
+    <div class="mc mc-green">
+      <div class="mc-label">Resultado Operacional</div>
+      <div class="mc-value">R$ 81.663,20</div>
+      <div class="mc-sub">Margem 41,2% · melhor do trimestre</div>
+    </div>
+  </div>
+  <div class="grid3">
+    <div class="mc mc-red">
+      <div class="mc-label">Retirada Líquida de Capital</div>
+      <div class="mc-value">− R$ 87.600,00</div>
+      <div class="mc-sub">Sem aportes em março</div>
+    </div>
+    <div class="mc mc-red">
+      <div class="mc-label">Resultado Final do Período</div>
+      <div class="mc-value">− R$ 5.936,80</div>
+      <div class="mc-sub">Impactado pela retirada do sócio</div>
+    </div>
+    <div class="mc mc-amber">
+      <div class="mc-label">Inadimplência Total</div>
+      <div class="mc-value">R$ 335.375,17</div>
+      <div class="mc-sub">43 clientes · 96 títulos em aberto</div>
+    </div>
+  </div>
+  <div class="note">⚠️ Conciliação bancária: R$ 6.804,34 de transitório entrada e saída — valores espelhados, neutralizados e excluídos do resultado operacional.</div>
+</section>
+
+<!-- 2. COMPARATIVO -->
+<section class="section" id="comparativo">
+  <div class="section-header">
+    <span class="section-icon">📊</span>
+    <span class="section-title">2 · Comparativo Mensal · Janeiro a Março/2026</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">Indicador</th>
+          <th class="r">Jan/2026</th>
+          <th class="r">Fev/2026</th>
+          <th class="r">Mar/2026</th>
+          <th class="c">Jan→Fev</th>
+          <th class="c">Fev→Mar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tsep"><td colspan="6">RECEITA</td></tr>
+        <tr>
+          <td>(+) Receita operacional</td>
+          <td class="r" style="color:var(--green)">179.969,76</td>
+          <td class="r" style="color:var(--green)">176.100,81</td>
+          <td class="r" style="color:var(--green);font-weight:700">198.141,88</td>
+          <td class="c"><span class="pill pill-r">−2,1%</span></td>
+          <td class="c"><span class="pill pill-g">+12,5%</span></td>
+        </tr>
+        <tr class="tsep"><td colspan="6">CUSTOS E DESPESAS OPERACIONAIS</td></tr>
+        <tr>
+          <td>(−) Custos e despesas</td>
+          <td class="r" style="color:var(--red)">109.058,96</td>
+          <td class="r" style="color:var(--red)">99.450,78</td>
+          <td class="r" style="color:var(--red)">116.478,68</td>
+          <td class="c"><span class="pill pill-g">−8,8%</span></td>
+          <td class="c"><span class="pill pill-a">+17,1%</span></td>
+        </tr>
+        <tr class="tg">
+          <td>(=) Resultado operacional</td>
+          <td class="r">70.910,80</td>
+          <td class="r">76.650,03</td>
+          <td class="r">81.663,20</td>
+          <td class="c"><span class="pill pill-g">+8,1%</span></td>
+          <td class="c"><span class="pill pill-g">+6,5%</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:24px;font-size:11px;color:var(--text3)">Margem operacional</td>
+          <td class="r" style="font-size:11px;color:var(--text3)">39,4%</td>
+          <td class="r" style="font-size:11px;color:var(--text3)">43,5%</td>
+          <td class="r" style="font-size:11px;color:var(--text3)">41,2%</td>
+          <td class="c"><span class="pill pill-g">+4,1pp</span></td>
+          <td class="c"><span class="pill pill-r">−2,3pp</span></td>
+        </tr>
+        <tr class="tsep"><td colspan="6">MOVIMENTAÇÃO DE CAPITAL DO SÓCIO</td></tr>
+        <tr>
+          <td style="padding-left:16px">(+) Aportes de capital</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="c">—</td><td class="c">—</td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px">(−) Retiradas de capital</td>
+          <td class="r" style="color:var(--red)">60.900,00</td>
+          <td class="r" style="color:var(--red)">101.876,33</td>
+          <td class="r" style="color:var(--red)">87.600,00</td>
+          <td class="c"><span class="pill pill-r">+67,3%</span></td>
+          <td class="c"><span class="pill pill-g">−14,0%</span></td>
+        </tr>
+        <tr class="tf">
+          <td>(=) Líquido de retiradas</td>
+          <td class="r" style="color:var(--red)">−60.900,00</td>
+          <td class="r" style="color:var(--red)">−101.876,33</td>
+          <td class="r" style="color:var(--red)">−87.600,00</td>
+          <td class="c">—</td><td class="c">—</td>
+        </tr>
+        <tr class="tsep"><td colspan="6">RESULTADO FINAL DO PERÍODO</td></tr>
+        <tr style="background:var(--green-bg)">
+          <td style="font-weight:700;color:var(--green)">Jan/2026</td>
+          <td class="r" style="font-weight:700;color:var(--green)">+10.010,80</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="c">—</td><td class="c">—</td>
+        </tr>
+        <tr style="background:var(--red-bg)">
+          <td style="font-weight:700;color:var(--red)">Fev/2026</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="r" style="font-weight:700;color:var(--red)">−25.226,30</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="c">—</td><td class="c">—</td>
+        </tr>
+        <tr style="background:var(--red-bg)">
+          <td style="font-weight:700;color:var(--red)">Mar/2026</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="r" style="color:var(--text3)">—</td>
+          <td class="r" style="font-weight:700;color:var(--red)">−5.936,80</td>
+          <td class="c">—</td><td class="c">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">Total retiradas no trimestre: <strong style="color:var(--red)">R$ 250.376,33</strong> &nbsp;·&nbsp; Resultado operacional acumulado: <strong style="color:var(--green)">R$ 229.224,03</strong></div>
+</section>
+
+<!-- 3. SEMANAL -->
+<section class="section" id="semanal">
+  <div class="section-header">
+    <span class="section-icon">📅</span>
+    <span class="section-title">3 · Destaque Semanal · Março/2026</span>
+    <div class="section-line"></div>
+  </div>
+  <div style="font-size:10px;color:var(--text3);margin-bottom:10px;display:flex;gap:16px">
+    <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#10b981;display:inline-block"></span>Entradas</span>
+    <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#ef4444;display:inline-block"></span>Saídas</span>
+  </div>
+  <div class="bar-section">
+    <div class="bar-row">
+      <div class="bar-label">S1 · 01–07/03</div>
+      <div class="bar-col">
+        <div class="bar-bg"><div class="bar-fill bar-fill-in" style="width:19.5%">R$ 38.582</div></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-out" style="width:38.4%">R$ 78.413 ⚠️</div></div>
+      </div>
+      <div class="bar-saldo" style="color:var(--red)">−R$ 39.831</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">S2 · 08–14/03</div>
+      <div class="bar-col">
+        <div class="bar-bg"><div class="bar-fill bar-fill-in" style="width:20.2%">R$ 39.960</div></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-out" style="width:14.9%">R$ 30.393</div></div>
+      </div>
+      <div class="bar-saldo" style="color:var(--green)">+R$ 9.567</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">S3 · 15–21/03 ★</div>
+      <div class="bar-col">
+        <div class="bar-bg"><div class="bar-fill bar-fill-in" style="width:33.4%">R$ 66.161 — pico do mês</div></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-out" style="width:25.7%">R$ 52.360</div></div>
+      </div>
+      <div class="bar-saldo" style="color:var(--green)">+R$ 13.801</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">S4 · 22–28/03</div>
+      <div class="bar-col">
+        <div class="bar-bg"><div class="bar-fill bar-fill-in" style="width:7.1%;background:linear-gradient(90deg,#92400e,#f59e0b);color:#fef3c7">R$ 14.109</div></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-out" style="width:9.5%">R$ 19.428</div></div>
+      </div>
+      <div class="bar-saldo" style="color:var(--red)">−R$ 5.320</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">S5 · 29–31/03</div>
+      <div class="bar-col">
+        <div class="bar-bg"><div class="bar-fill bar-fill-in" style="width:19.8%">R$ 39.330</div></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-out" style="width:11.5%">R$ 23.484</div></div>
+      </div>
+      <div class="bar-saldo" style="color:var(--green)">+R$ 15.847</div>
+    </div>
+  </div>
+  <div class="note">★ Semana 3 concentrou <strong>33,4% de toda a receita do mês</strong> · Semana 1 pressionada pela retirada de capital de R$ 87.600 · Semana 4 foi a mais fraca com apenas 7,1% das entradas</div>
+</section>
+
+<!-- 4. RECEITAS -->
+<section class="section" id="receitas">
+  <div class="section-header">
+    <span class="section-icon">📈</span>
+    <span class="section-title">4 · Receitas por Área do Direito</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Área</th><th class="r">Valor (R$)</th><th class="r">Participação</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Tributário</strong></td><td class="r" style="color:var(--green);font-weight:700">88.430,82</td><td class="r"><strong>44,6%</strong></td></tr>
+        <tr><td>Cível</td><td class="r">51.656,90</td><td class="r">26,1%</td></tr>
+        <tr><td>Assessorias</td><td class="r">26.500,00</td><td class="r">13,4%</td></tr>
+        <tr><td>Trabalhista</td><td class="r">12.016,51</td><td class="r">6,1%</td></tr>
+        <tr><td>Empresarial</td><td class="r">9.350,00</td><td class="r">4,7%</td></tr>
+        <tr><td>Direito Creditório</td><td class="r">4.502,40</td><td class="r">2,3%</td></tr>
+        <tr><td>Rec. Financeiras (Multa/Juros)</td><td class="r">1.941,51</td><td class="r">1,0%</td></tr>
+        <tr><td>Comissões de Terceiros</td><td class="r">1.780,40</td><td class="r">0,9%</td></tr>
+        <tr><td>Previdenciário + Outras</td><td class="r">1.963,34</td><td class="r">1,0%</td></tr>
+        <tr class="tf"><td>Total operacional</td><td class="r">198.141,88</td><td class="r">100%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">Tributário + Cível = <strong style="color:var(--green)">70,7% da receita</strong> — base sólida e diversificada dentro do portfólio jurídico.</div>
+</section>
+
+<!-- 5. RANKINGS -->
+<section class="section" id="rankings">
+  <div class="section-header">
+    <span class="section-icon">🏆</span>
+    <span class="section-title">5 · Rankings</span>
+    <div class="section-line"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Top 5 Clientes · Receita Recebida</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th>Cliente</th><th class="r">R$</th></tr></thead>
+          <tbody>
+            <tr><td class="c"><span class="rk rk-g">1</span></td><td>Fábio Luiz Barbosa</td><td class="r" style="color:var(--green)">20.000,00</td></tr>
+            <tr><td class="c"><span class="rk rk-s">2</span></td><td>Diversos</td><td class="r">17.753,74</td></tr>
+            <tr><td class="c"><span class="rk rk-b">3</span></td><td>Cond. Jatiucá Trade</td><td class="r">14.993,79</td></tr>
+            <tr><td class="c"><span class="rk rk-n">4</span></td><td>JW Topografia</td><td class="r">12.850,87</td></tr>
+            <tr><td class="c"><span class="rk rk-n">5</span></td><td>Charleberg M. Alves</td><td class="r">12.016,51</td></tr>
+            <tr class="tf"><td colspan="2" style="font-size:10px">Top 5 = 39,2% da receita</td><td class="r">77.614,91</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Top 5 Fornecedores · Despesa Op.</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th>Fornecedor</th><th class="r">R$</th></tr></thead>
+          <tbody>
+            <tr><td class="c"><span class="rk rk-g">1</span></td><td>Tizei, Mendonça Adv.</td><td class="r">16.560,00</td></tr>
+            <tr><td class="c"><span class="rk rk-s">2</span></td><td>A - Marilia L. Queiroz</td><td class="r">13.654,99</td></tr>
+            <tr><td class="c"><span class="rk rk-b">3</span></td><td>A - Erik da S. Lessa</td><td class="r">10.924,40</td></tr>
+            <tr><td class="c"><span class="rk rk-n">4</span></td><td>Ana P da Silva</td><td class="r">7.887,75</td></tr>
+            <tr><td class="c"><span class="rk rk-n">5</span></td><td>Custos Contratuais</td><td class="r">4.865,00</td></tr>
+            <tr class="tf"><td colspan="2" style="font-size:10px">Top 5 = 26,5% das despesas op.</td><td class="r">53.892,14</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--text3);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Top 5 Devedores · Inadimplência em 31/03/2026</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th class="c">#</th><th>Cliente</th><th class="r">Valor (R$)</th><th class="c">Parcelas</th><th class="c">Atraso</th></tr></thead>
+      <tbody>
+        <tr><td class="c"><span class="rk rk-g">1</span></td><td>RV Engenharia Ltda</td><td class="r">46.695,42</td><td class="c">2</td><td class="c"><span class="tag tag-a">95 dias</span></td></tr>
+        <tr><td class="c"><span class="rk rk-s">2</span></td><td>Jose Newton dos Santos Serviços</td><td class="r">29.782,78</td><td class="c">7</td><td class="c"><span class="tag tag-r">182 dias</span></td></tr>
+        <tr><td class="c"><span class="rk rk-b">3</span></td><td>Leão Transportadora Ltda</td><td class="r">22.673,16</td><td class="c">4</td><td class="c"><span class="tag tag-r">152 dias</span></td></tr>
+        <tr><td class="c"><span class="rk rk-n">4</span></td><td>Churrascaria Nobre Sabor Ltda</td><td class="r">22.456,08</td><td class="c">1</td><td class="c"><span class="tag tag-r">364 dias</span></td></tr>
+        <tr><td class="c"><span class="rk rk-n">5</span></td><td>JN Comércio de Variedades Ltda</td><td class="r">16.795,72</td><td class="c">3</td><td class="c"><span class="tag tag-a">44 dias</span></td></tr>
+        <tr class="tf"><td colspan="3" style="font-size:10px">Top 5 = 41,6% do total inadimplente</td><td class="c" colspan="2">138.403,16</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 6. INADIMPLÊNCIA -->
+<section class="section" id="inadimplencia">
+  <div class="section-header">
+    <span class="section-icon">⚠️</span>
+    <span class="section-title">6 · Aging de Inadimplência · Total R$ 335.375,17</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="table-wrap">
+    <div class="aging-item">
+      <div class="aging-label">Até 30 dias</div>
+      <div class="aging-right"><span class="tag tag-g">baixo risco</span><span class="aging-val" style="color:var(--green)">R$ 50.331,57</span><span style="color:var(--text3);font-size:11px">15,0%</span></div>
+    </div>
+    <div class="aging-item">
+      <div class="aging-label">31–60 dias</div>
+      <div class="aging-right"><span class="tag tag-a">atenção</span><span class="aging-val" style="color:var(--amber)">R$ 37.558,17</span><span style="color:var(--text3);font-size:11px">11,2%</span></div>
+    </div>
+    <div class="aging-item">
+      <div class="aging-label">61–90 dias</div>
+      <div class="aging-right"><span class="tag tag-a">atenção</span><span class="aging-val" style="color:var(--amber)">R$ 43.555,80</span><span style="color:var(--text3);font-size:11px">13,0%</span></div>
+    </div>
+    <div class="aging-item">
+      <div class="aging-label">91–180 dias</div>
+      <div class="aging-right"><span class="tag tag-r">crítico</span><span class="aging-val" style="color:var(--red)">R$ 136.018,05</span><span style="color:var(--text3);font-size:11px">40,6%</span></div>
+    </div>
+    <div class="aging-item">
+      <div class="aging-label">Acima de 180 dias</div>
+      <div class="aging-right"><span class="tag tag-r">grave</span><span class="aging-val" style="color:var(--red)">R$ 67.911,58</span><span style="color:var(--text3);font-size:11px">20,2%</span></div>
+    </div>
+  </div>
+  <div class="note">⚠️ <strong>60,8% da inadimplência (R$ 203.929,63) passou de 90 dias.</strong> Em advocacia, créditos acima de 180 dias têm taxa de recuperação inferior a 30% sem ação judicial. Clientes identificados: R$ 293.255,57 · Diversos: R$ 42.119,60 · Êxitos em andamento (valores simbólicos): excluídos da inadimplência.</div>
+</section>
+
+<!-- 7. TRÁFEGO -->
+<section class="section" id="trafego">
+  <div class="section-header">
+    <span class="section-icon">🔄</span>
+    <span class="section-title">7 · Centro de Custo "Tráfego" · Resultado e ROI</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="table-wrap" style="margin-bottom:12px">
+    <table>
+      <thead><tr><th>Componente</th><th class="r">Valor (R$)</th><th class="r">% da Receita</th></tr></thead>
+      <tbody>
+        <tr class="tsep"><td colspan="3">RECEITA</td></tr>
+        <tr><td>(+) Contratos originados pelo canal digital</td><td class="r" style="color:var(--green);font-weight:700">6.487,41</td><td class="r">100,0%</td></tr>
+        <tr class="tsep"><td colspan="3">CUSTOS DIRETOS</td></tr>
+        <tr><td>(−) Gestão de Tráfego — fornecedores</td><td class="r" style="color:var(--red)">6.600,00</td><td class="r">101,7%</td></tr>
+        <tr><td>(−) João Lucas · salário + rescisão</td><td class="r" style="color:var(--red)">4.297,66</td><td class="r">66,2%</td></tr>
+        <tr class="tsep"><td colspan="3">CUSTOS PROPORCIONAIS SOBRE A RECEITA</td></tr>
+        <tr><td>(−) Impostos · 8% sobre receita</td><td class="r" style="color:var(--red)">518,99</td><td class="r">8,0%</td></tr>
+        <tr><td>(−) Comissões de associados · 10%</td><td class="r" style="color:var(--red)">648,74</td><td class="r">10,0%</td></tr>
+        <tr class="tf"><td>Total de custos</td><td class="r" style="color:var(--red)">12.065,39</td><td class="r">186,0%</td></tr>
+        <tr class="tr2"><td>(=) Saldo líquido</td><td class="r">−5.577,98</td><td class="r">−86,0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="roi-grid">
+    <div class="roi-card">
+      <div class="roi-label">ROI do Canal Digital</div>
+      <div class="roi-value">−46,2%</div>
+      <div class="roi-sub">Para cada R$ 1,00 investido, retornou R$ 0,54</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-label">Proporção Custo/Receita</div>
+      <div class="roi-value">186,0%</div>
+      <div class="roi-sub">Gastou-se R$ 1,86 para gerar R$ 1,00</div>
+    </div>
+  </div>
+  <div style="margin-top:16px">
+    <div style="font-size:11px;color:var(--text3);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Gestão de Tráfego · Detalhamento por Fornecedor</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fornecedor</th><th class="r">Valor (R$)</th><th class="r">% Categoria</th><th class="c">Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>Facebook / Meta Ads</td><td class="r">4.000,00</td><td class="r">60,6%</td><td class="c"><span class="tag tag-a">recorrente</span></td></tr>
+          <tr><td>Hub Content Ltda</td><td class="r">1.600,00</td><td class="r">24,2%</td><td class="c"><span class="tag tag-a">recorrente</span></td></tr>
+          <tr><td>Google Ads</td><td class="r">1.000,00</td><td class="r">15,2%</td><td class="c"><span class="tag tag-a">recorrente</span></td></tr>
+          <tr class="tf"><td>Total Gestão de Tráfego</td><td class="r">6.600,00</td><td class="r">100%</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="note" style="border-left:3px solid var(--amber);background:var(--amber-bg)">⚠️ Sem a rescisão de João Lucas (R$ 1.447,34 — custo pontual), o ROI seria −34,2% — ainda negativo. O canal digital precisa de revisão estratégica urgente independentemente deste evento.</div>
+</section>
+
+<!-- 8. FELIPE ATHAYDE -->
+<section class="section" id="felipe">
+  <div class="section-header">
+    <span class="section-icon">👤</span>
+    <span class="section-title">8 · Centro de Custo "Felipe Athayde" · Posição Consolidada</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid4" style="margin-bottom:16px">
+    <div class="mc mc-green">
+      <div class="mc-label">Aporte de Capital</div>
+      <div class="mc-value" style="color:var(--text3)">R$ 0,00</div>
+      <div class="mc-sub">Nenhum aporte em março</div>
+    </div>
+    <div class="mc mc-red">
+      <div class="mc-label">Retirada de Capital</div>
+      <div class="mc-value">R$ 87.600,00</div>
+      <div class="mc-sub">1 evento no período</div>
+    </div>
+    <div class="mc mc-amber">
+      <div class="mc-label">Comissão de Vendas</div>
+      <div class="mc-value" style="color:var(--amber)">R$ 1.788,49</div>
+      <div class="mc-sub">Comp. fev/26 · pago 19/03</div>
+    </div>
+    <div class="mc mc-gray">
+      <div class="mc-label">Pró-labore</div>
+      <div class="mc-value">—</div>
+      <div class="mc-sub">A formalizar</div>
+    </div>
+  </div>
+  <div class="table-wrap" style="margin-bottom:12px;padding:0 14px">
+    <div class="felipe-row">
+      <div><div>(+) Aportes de capital</div><div class="felipe-sub">Nenhum registro em março</div></div>
+      <div style="color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:12px">R$ 0,00</div>
+    </div>
+    <div class="felipe-row">
+      <div><div>(−) Retirada de capital</div><div class="felipe-sub">Felipe Gomes de Athayde Antunes</div></div>
+      <div style="color:var(--red);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px">R$ 87.600,00</div>
+    </div>
+    <div class="felipe-row">
+      <div><div style="display:flex;align-items:center;gap:8px">(−) Comissão de vendas <span class="tag tag-a">Repasse Indicações/Fechamento</span></div><div class="felipe-sub">Competência fev/2026 · pago em 19/03/2026</div></div>
+      <div style="color:var(--red);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px">R$ 1.788,49</div>
+    </div>
+    <div class="felipe-row">
+      <div><div style="display:flex;align-items:center;gap:8px">(−) Pró-labore <span class="tag tag-gr">a formalizar</span></div><div class="felipe-sub">Previsto para meses subsequentes</div></div>
+      <div style="color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:12px">—</div>
+    </div>
+    <div class="felipe-total">
+      <span>(=) Saldo líquido do CC</span>
+      <span style="color:var(--red);font-family:'JetBrains Mono',monospace">−R$ 89.388,49</span>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--text3);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Receitas Geradas no CC Felipe Athayde</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Cliente</th><th>Área</th><th>Contrato</th><th>Data</th><th class="r">Valor (R$)</th></tr></thead>
+      <tbody>
+        <tr><td>Construriva Ltda</td><td>Tributário</td><td>060.2024</td><td>05/03</td><td class="r">195,62</td></tr>
+        <tr><td>Laumelino Francisco da Silva</td><td>Dir. Creditório</td><td>026.2026</td><td>06/03</td><td class="r">105,10</td></tr>
+        <tr><td>Fábio Luiz Barbosa</td><td>Cível</td><td>030.2026</td><td>10/03</td><td class="r">5.520,00</td></tr>
+        <tr><td>Célia Pereira dos Santos</td><td>Tributário</td><td>018.2024</td><td>10/03</td><td class="r">92,00</td></tr>
+        <tr><td>Célia Pereira dos Santos</td><td>Tributário</td><td>018.2024</td><td>12/03</td><td class="r">255,76</td></tr>
+        <tr><td>Season Smart Flats (Grupo Hasas)</td><td>Tributário</td><td>055.2025</td><td>16/03</td><td class="r">460,54</td></tr>
+        <tr class="tf"><td colspan="4">Total receitas CC Felipe Athayde</td><td class="r">6.629,02</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="border-left:3px solid var(--blue);background:var(--blue-bg)">ℹ️ Felipe gerou R$ 6.629,02 em receitas com custo de comissão de R$ 1.788,49 — relação saudável de captação. A formalização do pró-labore permitirá visão precisa do custo total do sócio vs. retorno gerado.</div>
+</section>
+
+<!-- 9. PRONAMPE -->
+<section class="section" id="pronampe">
+  <div class="section-header">
+    <span class="section-icon">🏦</span>
+    <span class="section-title">9 · Passivo Financeiro · PRONAMPE</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="table-wrap">
+    <div class="pronampe-item"><span class="pronampe-label">Total em aberto</span><span class="pronampe-val" style="color:var(--red);font-weight:700;font-family:'JetBrains Mono',monospace">R$ 33.750,00</span></div>
+    <div class="pronampe-item"><span class="pronampe-label">Composição</span><span class="pronampe-val">6 parcelas × R$ 5.625,00</span></div>
+    <div class="pronampe-item"><span class="pronampe-label">Vencimento mais antigo</span><span class="pronampe-val" style="color:var(--red)">30/09/2024 · 547 dias de atraso</span></div>
+    <div class="pronampe-item"><span class="pronampe-label">Vencimento mais recente</span><span class="pronampe-val">20/02/2025 · 404 dias de atraso</span></div>
+    <div class="pronampe-item"><span class="pronampe-label">Status</span><span class="pronampe-val"><span class="tag tag-r">Pendente de regularização</span></span></div>
+    <div class="pronampe-item"><span class="pronampe-label">Ação em curso</span><span class="pronampe-val" style="max-width:400px;text-align:right">Tratativa direta com instituição financeira para renegociação e quitação em melhores condições</span></div>
+  </div>
+  <div class="note" style="border-left:3px solid var(--red);background:var(--red-bg);color:#fca5a5">⚠️ Juros de mora e multa contratual acumulam-se silenciosamente a cada mês. O resultado operacional robusto de R$ 81.663 demonstra capacidade de pagamento — argumento forte em mesa de renegociação.</div>
+</section>
+
+<!-- 10. ALERTAS -->
+<section class="section" id="alertas">
+  <div class="section-header">
+    <span class="section-icon">⚠️</span>
+    <span class="section-title">10 · Gargalos e Alertas</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="alert alert-r"><strong>🔴 Canal digital em colapso de rentabilidade</strong>ROI de −46,2% com custo/receita de 186%. Escritórios com BPO financeiro maduro trabalham com ROI mínimo de +20%. O modelo atual está consumindo caixa sem retorno adequado.</div>
+  <div class="alert alert-r"><strong>🔴 Inadimplência crítica e envelhecendo</strong>R$ 335.375,17 total, sendo 60,8% com atraso superior a 90 dias. Taxa de recuperação de créditos acima de 180 dias sem ação judicial é inferior a 30%. O escritório tem R$ 67.911,58 nessa faixa de risco grave.</div>
+  <div class="alert alert-r"><strong>🔴 PRONAMPE sem regularização há mais de 400 dias</strong>Cada mês de inércia aumenta o passivo real além dos R$ 33.750,00 registrados. Risco de negativação e restrição de crédito é real e imediato.</div>
+  <div class="alert alert-a"><strong>🟡 Concentração de saídas na Semana 1</strong>38,4% das despesas nos primeiros 7 dias — antes das receitas chegarem. Padrão estrutural que pressiona o caixa de abertura do mês.</div>
+  <div class="alert alert-a"><strong>🟡 Custos crescendo mais rápido que a receita</strong>Receita subiu +12,5% e custos operacionais subiram +17,1% em março. Tesoura que, se mantida, comprimirá a margem nos próximos meses.</div>
+  <div class="alert alert-a"><strong>🟡 Retiradas superaram o resultado operacional no trimestre</strong>Retiradas: R$ 250.376,33 vs. resultado operacional acumulado: R$ 229.224,03. O sócio retirou R$ 21.152 a mais do que o negócio gerou operacionalmente no período.</div>
+</section>
+
+<!-- 11. INSIGHTS -->
+<section class="section" id="insights">
+  <div class="section-header">
+    <span class="section-icon">💡</span>
+    <span class="section-title">11 · Insights Estratégicos</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="alert alert-g"><strong>💚 A operação jurídica está saudável e em crescimento</strong>Resultado operacional subiu 15,2% em dois meses: R$ 70.911 → R$ 76.650 → R$ 81.663. Margem acima de 40% supera a média do setor, que gira entre 25% e 35%.</div>
+  <div class="alert alert-g"><strong>💚 Tributário como âncora estratégica</strong>44,6% da receita. Escritórios especializados em tributário têm contratos de longo prazo e honorários de êxito mais previsíveis — vantagem competitiva relevante no mercado.</div>
+  <div class="alert alert-b"><strong>💙 O modelo de vendas com Felipe Athayde está funcionando</strong>Gerou R$ 6.629,02 com custo de comissão de R$ 1.788,49 — relação saudável. Próximo passo: estruturar metas mensais de captação para o modelo escalar com previsibilidade.</div>
+  <div class="alert alert-b"><strong>💙 A inadimplência representa 1,69 meses de receita</strong>Se recuperado 40% do total, o escritório entraria em abril com caixa adicional de R$ 134.150. A cobrança ativa é o investimento de maior retorno disponível agora.</div>
+</section>
+
+<!-- 12. RECOMENDAÇÕES -->
+<section class="section" id="recomendacoes">
+  <div class="section-header">
+    <span class="section-icon">📝</span>
+    <span class="section-title">12 · Recomendações</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="table-wrap" style="padding:0 14px">
+    <div class="rec-item">
+      <div class="rec-num rec-num-r">1</div>
+      <div><div class="rec-title">Suspender Meta Ads até reestruturação do canal</div><div class="rec-body">Com João Lucas desligado, o escritório paga R$ 4.000/mês ao Facebook sem gestor interno dedicado à conversão. Manter apenas Google Ads (R$ 1.000) em abril enquanto se define o novo modelo — com meta de ROI mínimo de 25%.</div></div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num rec-num-r">2</div>
+      <div><div class="rec-title">Iniciar cobrança estruturada da carteira inadimplente</div><div class="rec-body">Três frentes: (a) Até 90 dias — régua de cobrança por WhatsApp e e-mail, proposta de parcelamento; (b) 90–180 dias — notificação extrajudicial com desconto de multa; (c) Acima de 180 dias — avaliar ação judicial. Prioridade: Churrascaria Nobre Sabor (364 dias · R$ 22.456) e J M Silva Andrade (366 dias · R$ 4.000).</div></div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num rec-num-r">3</div>
+      <div><div class="rec-title">Regularizar o PRONAMPE em até 60 dias</div><div class="rec-body">Resultado operacional de R$ 81.663 demonstra capacidade de pagamento — argumento forte em mesa de renegociação. Apresentar proposta formal com pagamento à vista do principal com abatimento de juros.</div></div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num rec-num-a">4</div>
+      <div><div class="rec-title">Criar política formal de retirada de capital</div><div class="rec-body">Definir percentual fixo — sugestão: 70% do resultado operacional mensal — e acumular o restante como reserva estratégica. Impede que retiradas superem o resultado gerado pelo negócio.</div></div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num rec-num-a">5</div>
+      <div><div class="rec-title">Redistribuir vencimentos de despesas fixas</div><div class="rec-body">Negociar com fornecedores recorrentes (aluguel, contabilidade, softwares) vencimento para entre os dias 15 e 20 — quando o escritório já recebeu historicamente mais de 50% da receita mensal. Elimina a pressão sobre o caixa de abertura.</div></div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num rec-num-a">6</div>
+      <div><div class="rec-title">Formalizar remuneração de Felipe Athayde</div><div class="rec-body">Definir: (a) pró-labore fixo mensal como base; (b) comissão variável sobre novos contratos com meta mínima para ativação; (c) separar claramente retirada de capital de remuneração. Protege juridicamente e cria incentivos claros de crescimento.</div></div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num rec-num-g">7</div>
+      <div><div class="rec-title">Expandir Assessorias como receita recorrente estratégica</div><div class="rec-body">Com R$ 26.500 em março (13,4% da receita) e ticket médio elevado, Assessorias é a categoria com maior potencial de previsibilidade. Aumentar de 3 para 6 contratos = ~R$ 53.000/mês adicionais de receita recorrente — equivale a eliminar toda a inadimplência atual em ~6 meses.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13. CONCLUSÃO -->
+<section class="section" id="conclusao">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <span class="section-title">13 · Conclusão Executiva</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="alert alert-b" style="margin-bottom:16px"><strong>O escritório está operacionalmente sólido — os desafios são financeiros e estratégicos, não jurídicos.</strong>A operação gerou R$ 229.224,03 de resultado operacional no trimestre — capital suficiente para resolver os três pontos críticos simultaneamente se bem alocado.</div>
+  <div class="table-wrap">
+    <div class="concl-row"><span class="concl-label">Operação jurídica</span><span class="concl-status" style="color:var(--green)">✅ Saudável · margem 41,2% · crescendo</span></div>
+    <div class="concl-row"><span class="concl-label">Canal digital</span><span class="concl-status" style="color:var(--red)">🔴 ROI negativo · revisão urgente</span></div>
+    <div class="concl-row"><span class="concl-label">Inadimplência</span><span class="concl-status" style="color:var(--red)">🔴 Crítica · cobrança ativa imediata</span></div>
+    <div class="concl-row"><span class="concl-label">PRONAMPE</span><span class="concl-status" style="color:var(--red)">🔴 Regularização em até 60 dias</span></div>
+    <div class="concl-row"><span class="concl-label">Retiradas de capital</span><span class="concl-status" style="color:var(--amber)">🟡 Monitorar · superam resultado no trimestre</span></div>
+    <div class="concl-row"><span class="concl-label">Felipe Athayde</span><span class="concl-status" style="color:var(--amber)">🟡 Formalizar remuneração e metas</span></div>
+    <div class="concl-row"><span class="concl-label">Assessorias</span><span class="concl-status" style="color:var(--green)">💚 Expandir como receita recorrente</span></div>
+  </div>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>Relatório Executivo Definitivo · Março/2026 · BPO Financeiro</div>
+  <div>Fontes: NIBO · contas_recebidas · contas_pagas · contas_receber · contas_pagar · Dados históricos jan–fev/2026</div>
+  <div style="margin-top:6px;color:#3b4a5a">Gerado em 09/04/2026 · Desenvolvido com Claude AI</div>
+</div>
+
+<script>
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const active = document.querySelector(`.nav-item[href="#${entry.target.id}"]`);
+      if (active) {
+        active.classList.add('active');
+        active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
